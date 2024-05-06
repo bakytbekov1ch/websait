@@ -6,38 +6,29 @@ import { Link } from "react-router-dom";
 import { FaFastBackward } from "react-icons/fa";
 import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 function Register() {
-  const [user, setUser] = useState({ email: "", password: "" });
-  async function serviceHandler() {
-    try {
-      const res = await createUserWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
-      console.log(res);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-      setUser({ email: "", password: "" });
-      toast.success("email is succes");
+  async function signUp() {
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      toast.success("accound create success");
+
+      console.log(res);
     } catch (error) {
-      if (error) {
-        toast.error("email is error");
-      }
+      toast.error(error.message)
+      console.log(error);
     }
   }
-  function onchangeHandler(e) {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  }
+
   return (
     <div className="Register">
       <div className="newRegister">
         <Card.Body>
           <h1 className="new__title">Sign In</h1>
-          <ToastContainer />
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label className="newRegister__title">
@@ -45,23 +36,21 @@ function Register() {
               </Form.Label>
               <div className="newRegister__block">
                 <Form.Control
-                  value={user.email}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
-                  name="email"
                   placeholder="name@example.com"
-                  onChange={onchangeHandler}
                 />
                 <Form.Control
-                  value={user.password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   type="password"
                   placeholder="password"
-                  name="password"
-                  onChange={onchangeHandler}
                 />
                 <Button
                   style={{ width: 90, fontSize: 18 }}
                   variant="outline-success"
-                  onClick={() => serviceHandler()}
+                  onClick={() => signUp()}
                 >
                   add
                 </Button>
@@ -76,7 +65,7 @@ function Register() {
                   <button className="new__btn">Sign In</button>
                 </Link>
                 <Link to="/login">
-                  <button className="new__btn2">Sign up</button>
+                  <button className="new__btn2">Sign Up</button>
                 </Link>
               </div>
             </Form.Group>

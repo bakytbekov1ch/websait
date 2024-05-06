@@ -9,7 +9,7 @@ import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
-    <divr>
+    <div>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />}></Route>
@@ -19,7 +19,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
       </Routes>
-    </divr>
+    </div>
   );
 }
 

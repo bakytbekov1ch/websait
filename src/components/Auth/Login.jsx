@@ -1,83 +1,60 @@
 import React, { useState } from "react";
 import { Card, Form } from "react-bootstrap";
 import "./style.css";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { Link, useNavigate } from "react-router-dom";
 import { FaFastBackward } from "react-icons/fa";
 import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
-function Login() {
-  // const [data, setData] = useState({email:"",password:""})
+function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [user, setUser] = useState({ email: "", password: "" });
-  async function serviceHandler() {
+  const navigate = useNavigate();
+
+  async function signIn() {
     try {
-      const res = await createUserWithEmailAndPassword(
-        auth,
-        user.name,
-        user.email,
-        user.password
-      );
-      console.log(res);
-
-      setUser({ email: "", password: "" });
-      toast.success("email is succes");
-    } catch (error) {
-      if (error) {
-        toast.error("email is error");
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      toast.success("sign in success");
+      if (res.user) {
+        navigate("/");
       }
+      console.log(res);
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error);
     }
-  }
-  function onchangeHandler(e) {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
   }
 
   return (
-    <div className="Login">
+    <div className="Register">
       <div className="newRegister">
         <Card.Body>
           <h1 className="new__title">Sign Up</h1>
-          <ToastContainer />
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label className="newRegister__title">
-                Name, Email, address, Password
+                Email address
               </Form.Label>
               <div className="newRegister__block">
                 <Form.Control
-                  name="name"
-                  onChange={onchangeHandler}
-                  type="name"
-                  placeholder="name"
-                />
-                <Form.Control
-                  name="email"
-                  onChange={onchangeHandler}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   placeholder="name@example.com"
                 />
                 <Form.Control
-                  name="pasaword"
-                  onChange={onchangeHandler}
-                  type="password"
-                  placeholder="password"
-                />
-                <Form.Control
-                  name="pasaword"
-                  onChange={onchangeHandler}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   type="password"
                   placeholder="password"
                 />
                 <Button
                   style={{ width: 90, fontSize: 18 }}
                   variant="outline-success"
-                  onClick={() => serviceHandler()}
+                  onClick={() => signIn()}
                 >
                   add
                 </Button>
@@ -102,4 +79,5 @@ function Login() {
     </div>
   );
 }
-export default Login;
+
+export default Register;

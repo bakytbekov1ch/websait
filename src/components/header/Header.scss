@@ -1,0 +1,58 @@
+.header {
+  width: 1250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  height: 44px;
+
+  .menu {
+    width: 431px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+      width: 175px;
+      height: 33px;
+    }
+
+    ul {
+      width: 216px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+
+      li {
+        width: 49px;
+        height: 20px;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+    }
+  }
+
+  .auth {
+    width: 164px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .signin {
+      font-size: 16px;
+      border: none;
+      background: none;
+    }
+
+    .signup {
+      width: 97px;
+      height: 44px;
+      font-size: 14px;
+      border-radius: 8px;
+      color: #fff;
+      border: none;
+      background: rgb(77, 119, 255);
+    }
+  }
+}
